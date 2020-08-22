@@ -3,11 +3,10 @@ import RecipeList from "./RecipeList";
 
 class RecipeSearch extends Component {
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       value: "",
-      recipes: props.recipes,
       recipes_found: null
     };
 
@@ -30,7 +29,7 @@ class RecipeSearch extends Component {
 
   	if (search_string.localeCompare("") != 0){
 
-	  	this.state.recipes.forEach(recipe => {
+	  	this.props.recipes.forEach(recipe => {
 	  		if (recipe.title.toLowerCase().includes(search_string))
 	  			recipes_found.push(recipe);
 		  }

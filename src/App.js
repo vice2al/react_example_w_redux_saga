@@ -9,8 +9,13 @@ class App extends React.Component{
     super(props);
 
     this.state = {
-      recipes: recipes
+      recipes: []
     };
+    this
+  }
+
+  componentDidMount(){
+  	this.setState({recipes: recipes});
   }
 
   render() {
