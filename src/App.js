@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import {RecipeSearch} from "./Components"
-
+import {recipes} from "./RecipesConst"
 class App extends React.Component{
 
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      recipes: recipes
+    };
   }
 
   render() {
@@ -14,7 +18,7 @@ class App extends React.Component{
         <div>
           <h1>{"Re(act)cipe"}</h1>
           <h2>{"Now we are cooking!"}</h2>
-          <RecipeSearch/>
+          <RecipeSearch recipes={this.state.recipes}/>
         </div>
     );
   }
