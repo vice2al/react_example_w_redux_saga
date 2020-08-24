@@ -25,12 +25,14 @@ class RecipeSearch extends Component {
     });
   }
 
+
+  
   handleSearch() {
   	var search_string = this.state.value;
   	var recipes_found = [];
 
   	if (search_string.localeCompare("") != 0){
-
+      //TODO: Transfer this logic to a selector in recipesSlice
 	  	this.props.recipes.forEach(recipe => {
 	  		if (recipe.title.toLowerCase().includes(search_string))
 	  			recipes_found.push(recipe);
