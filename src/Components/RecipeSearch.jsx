@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList";
+import { connect } from "react-redux";
+import { selectRecipes } from "../Redux/recipesSlice";
 
 class RecipeSearch extends Component {
   constructor(props) {
@@ -70,4 +72,4 @@ class RecipeSearch extends Component {
   }
 }
 
-export default RecipeSearch;
+export default connect(state => ({ recipes: selectRecipes(state) })) (RecipeSearch);

@@ -1,7 +1,7 @@
 import React from 'react';
 export const recipes = [
 	{
-		id: "1",
+		id: "0",
 		title: "Steak with Rice and Green Beans",
 		description: "What i had for dinner yesterday.",
 		ingredients: [
@@ -27,7 +27,7 @@ export const recipes = [
 	},
 
 	{
-		id: "2",
+		id: "1",
 		title: "Steak with Rice and Green Beans",
 		description: "What i had for dinner yesterday.",
 		ingredients: [

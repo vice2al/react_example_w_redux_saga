@@ -1,21 +1,19 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import {RecipeSearch} from "./Components"
-import {recipes} from "./RecipesConst"
+import { connect } from 'react-redux';
+import {RecipeSearch} from "./Components";
+import {recipes} from "./RecipesConst";
+import {load} from "./Redux/recipesSlice";
+
 class App extends React.Component{
 
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      recipes: []
-    };
-    this
   }
 
   componentDidMount(){
-  	this.setState({recipes: recipes});
+  	this.props.load(recipes);
   }
 
   render() {
@@ -23,10 +21,13 @@ class App extends React.Component{
         <div>
           <h1>{"Re(act)cipe"}</h1>
           <h2>{"Now we are cooking!"}</h2>
-          <RecipeSearch recipes={this.state.recipes}/>
+          <RecipeSearch />
         </div>
     );
   }
 }
 
-export default App;
+export default connect(
+  null,
+  { load }
+)(App);
