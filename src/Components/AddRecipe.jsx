@@ -16,17 +16,18 @@ class AddRecipe extends Component {
       title_value: "",
       description_value: "",
       ingredients: [""],
-      Instructions: [""]
+      instructions: [""]
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
+    this.handleFieldAddition = this.handleFieldAddition.bind(this);
   }
 
   handleChange(event) {
     const { value } = event.target;
     const field = parseInt(event.target.getAttribute("field"));
-
+		const index = parseInt(event.target.getAttribute("index"));
     switch(field){
 
       case TITLE_FIELD:
@@ -42,13 +43,22 @@ class AddRecipe extends Component {
         break;
       //TODO: change these two, depending on the input form
       case INGREDIENTS_FIELD:
+      	
+      	var list = this.state.ingredients;
+      	
+      	list[index] = value;
+      	console.log(event.target);
         this.setState({
-          ingredients_value: value
+          ingredients: list
         });
         break;
       case INSTRUCTIONS_FIELD:
+      	var list = this.state.instructions;
+      	
+      	list[index] = value;
+      	console.log(event.target);
         this.setState({
-          instructions_value: value
+          instructions: list
         });
         break;
       default:
@@ -61,8 +71,26 @@ class AddRecipe extends Component {
   	
   }
 
-  render() {
+  handleFieldAddition(event) {
+  	const field = parseInt(event.target.getAttribute("field"));
+  	var list = [];
+  	if (field == INGREDIENTS_FIELD){
+	  	list = this.state.ingredients;
+	  	list.push("");
+	  	this.setState({
+	  		ingredients: list
+	  	});
+  	}
+  	else {
+  		list = this.state.instructions;
+	  	list.push("");
+	  	this.setState({
+	  		instructions: list
+	  	});
+  	}
+  }
 
+  render() {
     return (
     	<div>
 	    	<div>
@@ -87,29 +115,59 @@ class AddRecipe extends Component {
           </form>
 
           <h4>{"Ingredients"}</h4>
-          <form>
-            <input
-              type="text"
-              field={INGREDIENTS_FIELD}
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </form>
 
+          <ul>
+	          {this.state.ingredients.map((value, index) => {
+	            return (
+  	            <li key={index}>
+  	            	<form key={index}>
+  		              <input
+  		              	key={index}
+  		              	index={index}
+  		                type="text"
+  		                field={INGREDIENTS_FIELD}
+  		                value={value}
+  		                onChange={this.handleChange}
+  		              />
+  		            </form>
+  		          </li>)
+	          })}
+          </ul>
+          <button
+          	field={INGREDIENTS_FIELD} 
+          	onClick={this.handleFieldAddition}
+          >
+		        {"Another Ingredient"}
+		      </button>
           <h4>{"Instructions"}</h4>
-          <form>
-            <input
-              type="text"
-              field={INSTRUCTIONS_FIELD}
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </form>
-
-		      <button onClick={this.handleAddition}>
-		        {"Add Recipe"}
+          <ol>
+	          {this.state.instructions.map((value, index) => {
+	            return (
+  	            <li key={index}>
+  	            	<form key={index}>
+  		              <input
+  		              	key={index}
+  		              	index={index}
+  		                type="text"
+  		                field={INSTRUCTIONS_FIELD}
+  		                value={value}
+  		                onChange={this.handleChange}
+  		              />
+  		            </form>
+  		          </li>)
+	          })}
+          </ol>
+          <button 
+          	field={INSTRUCTIONS_FIELD} 
+          	onClick={this.handleFieldAddition}
+          >
+		        {"Another Step"}
 		      </button>
 	      </div>
+	      <p/>
+	      <button onClick={this.handleAddition}>
+	        {"Add Recipe"}
+	      </button>
       </div>
     );
   }
