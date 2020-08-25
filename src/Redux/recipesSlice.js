@@ -13,7 +13,7 @@ export const recipesSlice = createSlice({
       state.list.push(action.payload)
     },
     remove: (state, action) => {
-      state.list.splice(array.indexOf(action.payload),1)
+      state.list.splice(state.list.indexOf(action.payload),1)
     }
   }
 });
