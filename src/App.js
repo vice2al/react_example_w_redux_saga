@@ -15,10 +15,11 @@ class App extends React.Component{
     super(props);
 
     this.state = {
-      active_component: ADDRECIPE_COMPONENT,
+      active_component: RECIPESEARCH_COMPONENT
     };
 
     this.renderSelectedComponent = this.renderSelectedComponent.bind(this);
+    this.switchComponent = this.switchComponent.bind(this);
   }
 
   componentDidMount(){
@@ -43,14 +44,37 @@ class App extends React.Component{
     return component;
   }
 
+  switchComponent(event) {
+    var field = parseInt(event.target.dataset.field);
+
+    if (field === RECIPESEARCH_COMPONENT && field !== this.state.active_component)
+      this.setState({active_component: RECIPESEARCH_COMPONENT});
+    else if (field === ADDRECIPE_COMPONENT && field !== this.state.active_component)
+      this.setState({active_component: ADDRECIPE_COMPONENT});
+  }
+
   render() {
-
-
 
     return (
         <div>
           <h1>{"Re(act)cipe"}</h1>
           <h2>{"Now we are cooking!"}</h2>
+          <p/>
+          <div>
+            <button 
+              data-field={RECIPESEARCH_COMPONENT}
+              onClick={this.switchComponent}
+            > 
+              {"Search Recipe"} 
+            </button>
+            <button 
+              data-field={ADDRECIPE_COMPONENT}
+              onClick={this.switchComponent}
+            >
+              {"Add Recipe"}
+            </button> 
+          </div>
+          <p/>
           {this.renderSelectedComponent()}
         </div>
     );

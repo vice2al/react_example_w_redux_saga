@@ -12,14 +12,14 @@ export default function Recipe(props){
 			<p/>
 			<h5> {"Ingredients"} </h5>
 			<ul>
-				{recipe.ingredients.map(ingredient => (
-					<li> {ingredient} </li>
+				{recipe.ingredients.map((ingredient, index) => (
+					<li key={index}> {ingredient} </li>
 				))}
 			</ul>			
 			<h5> {"Instructions"} </h5>
 			<ol>
-				{recipe.instructions.map(step => (
-					<li> {step} </li>
+				{recipe.instructions.map((step, index) => (
+					<li key={index}> {step} </li>
 				))}
 			</ol>
 			</div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList";
 import { connect } from "react-redux";
-import { selectRecipes } from "../Redux/recipesSlice";
+import { add } from "../Redux/recipesSlice";
 
 const TITLE_FIELD         = 0;
 const DESCRIPTION_FIELD   = 1;
@@ -20,14 +20,14 @@ class AddRecipe extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleAddition = this.handleAddition.bind(this);
+    this.handleSubmittion = this.handleSubmittion.bind(this);
     this.handleFieldAddition = this.handleFieldAddition.bind(this);
   }
 
   handleChange(event) {
     const { value } = event.target;
-    const field = parseInt(event.target.getAttribute("field"));
-		const index = parseInt(event.target.getAttribute("index"));
+    const field = parseInt(event.target.dataset.field);
+		const index = parseInt(event.target.dataset.index);
     switch(field){
 
       case TITLE_FIELD:
@@ -43,20 +43,17 @@ class AddRecipe extends Component {
         break;
       //TODO: change these two, depending on the input form
       case INGREDIENTS_FIELD:
-      	
       	var list = this.state.ingredients;
-      	
       	list[index] = value;
-      	console.log(event.target);
+
         this.setState({
           ingredients: list
         });
         break;
       case INSTRUCTIONS_FIELD:
       	var list = this.state.instructions;
-      	
       	list[index] = value;
-      	console.log(event.target);
+
         this.setState({
           instructions: list
         });
@@ -67,12 +64,18 @@ class AddRecipe extends Component {
   }
 
   //TODO
-  handleAddition() {
-  	
+  handleSubmittion() {
+  	var new_recipe = {
+  		title: this.state.title_value,
+			description: this.state.description_value,
+			ingredients: this.state.ingredients,
+			instructions: this.state.instructions
+  	}
+  	this.props.add(new_recipe);
   }
 
   handleFieldAddition(event) {
-  	const field = parseInt(event.target.getAttribute("field"));
+  	const field = parseInt(event.target.dataset.field);
   	var list = [];
   	if (field == INGREDIENTS_FIELD){
 	  	list = this.state.ingredients;
@@ -98,7 +101,7 @@ class AddRecipe extends Component {
 		      <form>
 		        <input
 		          type="text"
-              field={TITLE_FIELD}
+              data-field={TITLE_FIELD}
 		          value={this.state.title_value}
 		          onChange={this.handleChange}
 		        />
@@ -108,7 +111,7 @@ class AddRecipe extends Component {
           <form>
             <input
               type="text"
-              field={DESCRIPTION_FIELD}
+              data-field={DESCRIPTION_FIELD}
               value={this.state.description_value}
               onChange={this.handleChange}
             />
@@ -123,9 +126,9 @@ class AddRecipe extends Component {
   	            	<form key={index}>
   		              <input
   		              	key={index}
-  		              	index={index}
   		                type="text"
-  		                field={INGREDIENTS_FIELD}
+  		              	data-index={index}
+  		                data-field={INGREDIENTS_FIELD}
   		                value={value}
   		                onChange={this.handleChange}
   		              />
@@ -134,7 +137,7 @@ class AddRecipe extends Component {
 	          })}
           </ul>
           <button
-          	field={INGREDIENTS_FIELD} 
+          	data-field={INGREDIENTS_FIELD} 
           	onClick={this.handleFieldAddition}
           >
 		        {"Another Ingredient"}
@@ -147,9 +150,9 @@ class AddRecipe extends Component {
   	            	<form key={index}>
   		              <input
   		              	key={index}
-  		              	index={index}
   		                type="text"
-  		                field={INSTRUCTIONS_FIELD}
+  		              	data-index={index}
+  		                data-field={INSTRUCTIONS_FIELD}
   		                value={value}
   		                onChange={this.handleChange}
   		              />
@@ -158,14 +161,14 @@ class AddRecipe extends Component {
 	          })}
           </ol>
           <button 
-          	field={INSTRUCTIONS_FIELD} 
+          	data-field={INSTRUCTIONS_FIELD} 
           	onClick={this.handleFieldAddition}
           >
 		        {"Another Step"}
 		      </button>
 	      </div>
 	      <p/>
-	      <button onClick={this.handleAddition}>
+	      <button onClick={this.handleSubmittion}>
 	        {"Add Recipe"}
 	      </button>
       </div>
@@ -173,4 +176,7 @@ class AddRecipe extends Component {
   }
 }
 
-export default AddRecipe;
+export default connect(
+  null,
+  { add }
+)(AddRecipe);

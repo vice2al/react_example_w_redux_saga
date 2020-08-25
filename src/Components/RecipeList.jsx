@@ -7,8 +7,8 @@ export default function RecipeList(props){
 
 	return (
 		<div>
-			{recipes_to_list.map(recipe => (
-				<Recipe recipe={recipe} key={recipe.id}/>
+			{recipes_to_list.map((recipe, index) => (
+				<Recipe recipe={recipe} key={index}/>
 			))}
 		</div>
 	);
