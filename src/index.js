@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers  } from 'redux'
 import createSagaMiddleware from 'redux-saga';
-import { helloSaga } from './Saga/sagas';
+import rootSaga from './Saga/sagas';
 import App from './App';
 import recipesReducer from './Redux/recipesSlice';
 
@@ -18,7 +18,7 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(helloSaga);
+sagaMiddleware.run(rootSaga);
 
 const wrapper = document.getElementById("container");
 

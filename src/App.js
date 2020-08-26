@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
 import {RecipeSearch, AddRecipe} from "./Components";
 import {recipes} from "./RecipesConst";
-import {load} from "./Redux/recipesSlice";
+import {load_request} from "./Redux/recipesSlice";
 
 const RECIPESEARCH_COMPONENT = 0;
 const ADDRECIPE_COMPONENT = 1;
@@ -23,7 +23,7 @@ class App extends React.Component{
   }
 
   componentDidMount(){
-  	this.props.load(recipes);
+  	this.props.load_request(recipes);
   }
 
   renderSelectedComponent(){
@@ -83,5 +83,5 @@ class App extends React.Component{
 
 export default connect(
   null,
-  { load }
+  { load_request }
 )(App);

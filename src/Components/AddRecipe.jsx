@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList";
 import { connect } from "react-redux";
-import { add } from "../Redux/recipesSlice";
+import { add_request } from "../Redux/recipesSlice";
 
 const TITLE_FIELD         = 0;
 const DESCRIPTION_FIELD   = 1;
@@ -71,7 +71,7 @@ class AddRecipe extends Component {
 			ingredients: this.state.ingredients,
 			instructions: this.state.instructions
   	}
-  	this.props.add(new_recipe);
+  	this.props.add_request(new_recipe);
   }
 
   handleFieldAddition(event) {
@@ -178,5 +178,5 @@ class AddRecipe extends Component {
 
 export default connect(
   null,
-  { add }
+  { add_request }
 )(AddRecipe);
