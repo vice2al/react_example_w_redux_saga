@@ -5,22 +5,26 @@ import {remove} from "../Redux/recipesSlice";
 
 export default function RecipeList(props){
 
-	var recipes_to_list = props.recipes;
 	const dispatch = useDispatch();
 
-	function removeRecipe(event) {
+	function handleRemoveRecipe(event) {
+		// If we wanted to keep all functionality in the RecipeSearch component we would
+		// move the redux call there. In this instance I wanted to try doing it inside
+		// the stateless component for practice reasons.
 		dispatch(remove(event.target.dataset.recipe));
+		props.onRemoval(event.target.dataset.index);
 	}
 
 	return (
 		<div>
-			{recipes_to_list.map((recipe, index) => (
+			{props.recipes.map((recipe, index) => (
 				<div key={index}>
 					<Recipe recipe={recipe} key={index}/>
 					<button 
 						key={index+1}
+						data-index={index}
 	          data-recipe={recipe}
-	          onClick={removeRecipe}
+	          onClick={handleRemoveRecipe}
 	        >
 	          {"Remove this Recipe"}
 	        </button>

@@ -14,6 +14,8 @@ class RecipeSearch extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.renderSearchResult = this.renderSearchResult.bind(this);
+    this.handleRecipeRemoval = this.handleRecipeRemoval.bind(this);
   }
 
   handleChange(event) {
@@ -42,15 +44,26 @@ class RecipeSearch extends Component {
   	this.setState({recipes_found: recipes_found});
   }
 
+  renderSearchResult() {
+    if (this.state.recipes_found === null)
+      return <div/>;
+    else if (this.state.recipes_found.length == 0)
+      return <h4>{"No recipes found."}</h4>;
+    else {
+      return <RecipeList 
+                onRemoval={this.handleRecipeRemoval} 
+                recipes={this.state.recipes_found}
+              />;
+    }
+  }
+
+  handleRecipeRemoval (index) {
+    var updated_list = this.state.recipes_found;
+    updated_list.splice(index, 1);
+    this.setState({recipes_found: updated_list});
+  }
+
   render() {
-  	let renderSearchResult;
-  	
-  	if (this.state.recipes_found === null)
-  		renderSearchResult = <div/>;
-  	else if (this.state.recipes_found.length == 0)
-  		renderSearchResult = <h4>{"No recipes found."}</h4>;
-  	else
-  		renderSearchResult = <RecipeList recipes={this.state.recipes_found}/>;
 
     return (
     	<div>
@@ -67,7 +80,7 @@ class RecipeSearch extends Component {
 		      </button>
 	      </div>
 	      <div>
-	      	{renderSearchResult}
+	      	{this.renderSearchResult()}
 	      </div>
       </div>
     );
