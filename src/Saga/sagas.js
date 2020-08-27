@@ -7,6 +7,7 @@ export function* helloSaga() {
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
 export function* LoadAsync({ payload }) {
+	yield delay(1000);
   yield put({type: "recipes/load_success", payload});
 }
 

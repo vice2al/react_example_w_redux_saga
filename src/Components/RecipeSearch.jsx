@@ -87,4 +87,6 @@ class RecipeSearch extends Component {
   }
 }
 
-export default connect(state => ({ recipes: selectRecipes(state) })) (RecipeSearch);
+export default connect(
+  state => ({ recipes: selectRecipes(state) })
+) (RecipeSearch);

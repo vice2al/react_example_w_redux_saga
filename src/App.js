@@ -1,12 +1,22 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
-import {RecipeSearch, AddRecipe} from "./Components";
+import {
+  RecipeSearch, 
+  AddRecipe
+} from "./Components";
+import {
+  load_request, 
+  selectLoadStatus
+} from "./Redux/recipesSlice";
 import {recipes} from "./RecipesConst";
-import {load_request} from "./Redux/recipesSlice";
 
-const RECIPESEARCH_COMPONENT = 0;
-const ADDRECIPE_COMPONENT = 1;
+const PENDING = 0;
+const SUCCESS = 1;
+
+const LOADING_COMPONENTS = 0
+const RECIPESEARCH_COMPONENT = 1;
+const ADDRECIPE_COMPONENT = 2;
 
 class App extends React.Component{
 
@@ -15,10 +25,11 @@ class App extends React.Component{
     super(props);
 
     this.state = {
-      active_component: RECIPESEARCH_COMPONENT
+      active_component: LOADING_COMPONENTS
     };
 
-    this.renderSelectedComponent = this.renderSelectedComponent.bind(this);
+    this.renderSelectedComponent 
+      = this.renderSelectedComponent.bind(this);
     this.switchComponent = this.switchComponent.bind(this);
   }
 
@@ -26,10 +37,19 @@ class App extends React.Component{
   	this.props.load_request(recipes);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.load_status === PENDING 
+      && this.props.load_status === SUCCESS)
+      this.setState({active_component: RECIPESEARCH_COMPONENT});
+  }
+
   renderSelectedComponent(){
     var component;
 
     switch(this.state.active_component){
+      case LOADING_COMPONENTS:
+        component = <h4>{"Loading Recipes"}</h4>
+        break;
       case RECIPESEARCH_COMPONENT:
         component = <RecipeSearch />;
         break;
@@ -47,10 +67,14 @@ class App extends React.Component{
   switchComponent(event) {
     var field = parseInt(event.target.dataset.field);
 
-    if (field === RECIPESEARCH_COMPONENT && field !== this.state.active_component)
-      this.setState({active_component: RECIPESEARCH_COMPONENT});
-    else if (field === ADDRECIPE_COMPONENT && field !== this.state.active_component)
-      this.setState({active_component: ADDRECIPE_COMPONENT});
+    if (this.state.active_component !== LOADING_COMPONENTS){
+      if (field === RECIPESEARCH_COMPONENT 
+        && field !== this.state.active_component)
+        this.setState({active_component: RECIPESEARCH_COMPONENT});
+      else if (field === ADDRECIPE_COMPONENT 
+        && field !== this.state.active_component)
+        this.setState({active_component: ADDRECIPE_COMPONENT});
+    }
   }
 
   render() {
@@ -81,7 +105,9 @@ class App extends React.Component{
   }
 }
 
+//In this component the mapStateToProps function is written inline 
+//in the connect method, since we only need one state property.
 export default connect(
-  null,
+  state => ({ load_status: selectLoadStatus(state) }),
   { load_request }
 )(App);

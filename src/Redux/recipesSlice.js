@@ -45,5 +45,6 @@ export const {
   remove_success } = recipesSlice.actions;
 
 export const selectRecipes = state => state.recipes.list;
+export const selectLoadStatus = state => state.recipes.load_status;
 
 export default recipesSlice.reducer;
