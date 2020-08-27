@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList";
 import { connect } from "react-redux";
-import { add_request } from "../Redux/recipesSlice";
+import { 
+  add_request, 
+  selectAddStatus 
+} from "../Redux/recipesSlice";
 
 const TITLE_FIELD         = 0;
 const DESCRIPTION_FIELD   = 1;
 const INGREDIENTS_FIELD   = 2;
 const INSTRUCTIONS_FIELD  = 3;
+
+const AVAILABLE = 0;
+const PENDING = 1;
+const SUCCESS = 2;
 
 class AddRecipe extends Component {
   constructor(props) {
@@ -22,6 +29,18 @@ class AddRecipe extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmittion = this.handleSubmittion.bind(this);
     this.handleFieldAddition = this.handleFieldAddition.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.add_status === PENDING 
+      && this.props.add_status === SUCCESS){
+      this.setState({
+        title_value: "",
+        description_value: "",
+        ingredients: [""],
+        instructions: [""]
+      })
+    }
   }
 
   handleChange(event) {
@@ -63,7 +82,6 @@ class AddRecipe extends Component {
     }
   }
 
-  //TODO
   handleSubmittion() {
   	var new_recipe = {
   		title: this.state.title_value,
@@ -169,14 +187,21 @@ class AddRecipe extends Component {
 	      </div>
 	      <p/>
 	      <button onClick={this.handleSubmittion}>
-	        {"Add Recipe"}
+	        {
+            this.props.add_status === PENDING 
+            ? "Adding..." : "Add Recipe"
+          }
 	      </button>
+	      {
+	      	this.props.add_status === SUCCESS
+	      	? <h4>{"Recipe added!"}</h4> : <div/>
+	      }
       </div>
     );
   }
 }
 
 export default connect(
-  null,
+  state => ({ add_status: selectAddStatus(state) }),
   { add_request }
 )(AddRecipe);

@@ -11,8 +11,9 @@ import {
 } from "./Redux/recipesSlice";
 import {recipes} from "./RecipesConst";
 
-const PENDING = 0;
-const SUCCESS = 1;
+const AVAILABLE = 0;
+const PENDING = 1;
+const SUCCESS = 2;
 
 const LOADING_COMPONENTS = 0
 const RECIPESEARCH_COMPONENT = 1;

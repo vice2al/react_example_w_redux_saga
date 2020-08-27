@@ -26,7 +26,10 @@ export default function RecipeList(props){
 	          data-recipe={recipe}
 	          onClick={handleRemoveRecipe}
 	        >
-	          {"Remove this Recipe"}
+	          {
+	          	index == props.recipe_to_be_removed 
+	          	? "Removing..." : "Remove Recipe"
+	          }
 	        </button>
         </div>
 			))}

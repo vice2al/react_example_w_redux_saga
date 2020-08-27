@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const PENDING = 0;
-const SUCCESS = 1;
+const AVAILABLE = 0;
+const PENDING = 1;
+const SUCCESS = 2;
 
 export const recipesSlice = createSlice({
   name: 'recipes',
   initialState: {
     list: [],
-    load_status: SUCCESS,
-    add_status: SUCCESS,
-    remove_status: SUCCESS
+    load_status: AVAILABLE,
+    add_status: AVAILABLE,
+    remove_status: AVAILABLE
   },
   reducers: {
     load_request: (state, action) => {
@@ -46,5 +47,7 @@ export const {
 
 export const selectRecipes = state => state.recipes.list;
 export const selectLoadStatus = state => state.recipes.load_status;
+export const selectAddStatus = state => state.recipes.add_status;
+export const selectRemoveStatus = state => state.recipes.remove_status;
 
 export default recipesSlice.reducer;

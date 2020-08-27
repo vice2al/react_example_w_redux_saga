@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList";
 import { connect } from "react-redux";
-import { selectRecipes } from "../Redux/recipesSlice";
+import { 
+  selectRecipes,
+  selectRemoveStatus
+} from "../Redux/recipesSlice";
+
+const AVAILABLE = 0;
+const PENDING = 1;
+const SUCCESS = 2;
 
 class RecipeSearch extends Component {
   constructor(props) {
@@ -9,13 +16,28 @@ class RecipeSearch extends Component {
 
     this.state = {
       value: "",
-      recipes_found: null
+      recipes_found: null,
+      recipe_to_be_removed: -1 
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.renderSearchResult = this.renderSearchResult.bind(this);
     this.handleRecipeRemoval = this.handleRecipeRemoval.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.remove_status === PENDING 
+      && this.props.remove_status === SUCCESS){
+      
+      var updated_list = this.state.recipes_found;
+      updated_list.splice(this.state.recipe_to_be_removed, 1);
+      
+      this.setState({
+        recipes_found: updated_list, 
+        recipe_to_be_removed: -1
+      });
+    }
   }
 
   handleChange(event) {
@@ -51,16 +73,17 @@ class RecipeSearch extends Component {
       return <h4>{"No recipes found."}</h4>;
     else {
       return <RecipeList 
-                onRemoval={this.handleRecipeRemoval} 
                 recipes={this.state.recipes_found}
+                onRemoval={this.handleRecipeRemoval} 
+                recipe_to_be_removed={this.state.recipe_to_be_removed}
               />;
     }
   }
 
   handleRecipeRemoval (index) {
-    var updated_list = this.state.recipes_found;
-    updated_list.splice(index, 1);
-    this.setState({recipes_found: updated_list});
+    this.setState({
+      recipe_to_be_removed: index
+    });
   }
 
   render() {
@@ -88,5 +111,8 @@ class RecipeSearch extends Component {
 }
 
 export default connect(
-  state => ({ recipes: selectRecipes(state) })
+  state => ({ 
+    recipes: selectRecipes(state), 
+    remove_status: selectRemoveStatus(state)
+  })
 ) (RecipeSearch);
