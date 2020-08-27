@@ -8,9 +8,10 @@ export default function RecipeList(props){
 	const dispatch = useDispatch();
 
 	function handleRemoveRecipe(event) {
-		// If we wanted to keep all functionality in the RecipeSearch component we would
-		// move the redux call there. In this instance I wanted to try doing it inside
-		// the stateless component for practice reasons.
+		// If we wanted to keep all functionality in the RecipeSearch 
+		// component we would move the redux call there. In this instance
+		// I wanted to try doing it inside the stateless component for 
+		// practice reasons.
 		dispatch(remove_request(event.target.dataset.recipe));
 		props.onRemoval(event.target.dataset.index);
 	}

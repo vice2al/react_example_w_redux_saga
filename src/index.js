@@ -3,11 +3,15 @@ import "regenerator-runtime"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers  } from 'redux'
+import { 
+	createStore, 
+	applyMiddleware, 
+	combineReducers  
+} from 'redux';
+import recipesReducer from './Redux/recipesSlice';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './Saga/sagas';
 import App from './App';
-import recipesReducer from './Redux/recipesSlice';
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -26,4 +30,4 @@ wrapper ? ReactDOM.render(
 	<Provider store={store}>
 		<App/>
 	</Provider>, 
-	wrapper) : false;
+wrapper) : false;

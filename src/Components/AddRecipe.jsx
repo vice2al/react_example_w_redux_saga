@@ -60,7 +60,7 @@ class AddRecipe extends Component {
           description_value: value
         });
         break;
-      //TODO: change these two, depending on the input form
+
       case INGREDIENTS_FIELD:
       	var list = this.state.ingredients;
       	list[index] = value;
@@ -69,6 +69,7 @@ class AddRecipe extends Component {
           ingredients: list
         });
         break;
+
       case INSTRUCTIONS_FIELD:
       	var list = this.state.instructions;
       	list[index] = value;
@@ -136,7 +137,6 @@ class AddRecipe extends Component {
           </form>
 
           <h4>{"Ingredients"}</h4>
-
           <ul>
 	          {this.state.ingredients.map((value, index) => {
 	            return (
@@ -160,6 +160,7 @@ class AddRecipe extends Component {
           >
 		        {"Another Ingredient"}
 		      </button>
+
           <h4>{"Instructions"}</h4>
           <ol>
 	          {this.state.instructions.map((value, index) => {
@@ -184,8 +185,11 @@ class AddRecipe extends Component {
           >
 		        {"Another Step"}
 		      </button>
+
 	      </div>
+	      
 	      <p/>
+	      
 	      <button onClick={this.handleSubmittion}>
 	        {
             this.props.add_status === PENDING 

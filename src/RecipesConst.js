@@ -1,4 +1,5 @@
 import React from 'react';
+
 export const recipes = [
 	{
 		title: "Steak with Rice and Green Beans",
