@@ -1,38 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit'
-
-const AVAILABLE = 0;
-const PENDING = 1;
-const SUCCESS = 2;
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  ACTION_AVAILABLE,
+  ACTION_PENDING,
+  ACTION_SUCCESS
+} from "./redux_constants";
 
 export const recipesSlice = createSlice({
   name: 'recipes',
   initialState: {
     list: [],
-    load_status: AVAILABLE,
-    add_status: AVAILABLE,
-    remove_status: AVAILABLE
+    load_status: ACTION_AVAILABLE,
+    add_status: ACTION_AVAILABLE,
+    remove_status: ACTION_AVAILABLE
   },
   reducers: {
     load_request: (state, action) => {
-      state.load_status = PENDING
+      state.load_status = ACTION_PENDING;
     },
     load_success: (state, action) => {
       state.list = action.payload;
-      state.load_status = SUCCESS;
+      state.load_status = ACTION_SUCCESS;
     },
     add_request: (state, action) => {
-      state.add_status = PENDING
+      state.add_status = ACTION_PENDING;
     },
     add_success: (state, action) => {
       state.list.push(action.payload);
-      state.add_status = SUCCESS;
+      state.add_status = ACTION_SUCCESS;
     },
     remove_request: (state, action) => {
-      state.remove_status = PENDING
+      state.remove_status = ACTION_PENDING;
     },
     remove_success: (state, action) => {
       state.list.splice(state.list.indexOf(action.payload),1);
-      state.remove_status = SUCCESS;
+      state.remove_status = ACTION_SUCCESS;
     }
   }
 });

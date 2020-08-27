@@ -5,15 +5,15 @@ import {
   add_request, 
   selectAddStatus 
 } from "../Redux/recipesSlice";
+import {
+  ACTION_PENDING,
+  ACTION_SUCCESS
+} from "../Redux/redux_constants";
 
 const TITLE_FIELD         = 0;
 const DESCRIPTION_FIELD   = 1;
 const INGREDIENTS_FIELD   = 2;
 const INSTRUCTIONS_FIELD  = 3;
-
-const AVAILABLE = 0;
-const PENDING = 1;
-const SUCCESS = 2;
 
 class AddRecipe extends Component {
   constructor(props) {
@@ -32,8 +32,8 @@ class AddRecipe extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.add_status === PENDING 
-      && this.props.add_status === SUCCESS){
+    if (prevProps.add_status === ACTION_PENDING 
+      && this.props.add_status === ACTION_SUCCESS){
       this.setState({
         title_value: "",
         description_value: "",
@@ -192,12 +192,12 @@ class AddRecipe extends Component {
 	      
 	      <button onClick={this.handleSubmittion}>
 	        {
-            this.props.add_status === PENDING 
+            this.props.add_status === ACTION_PENDING 
             ? "Adding..." : "Add Recipe"
           }
 	      </button>
 	      {
-	      	this.props.add_status === SUCCESS
+	      	this.props.add_status === ACTION_SUCCESS
 	      	? <h4>{"Recipe added!"}</h4> : <div/>
 	      }
       </div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const recipes = [
 	{
 		title: "Steak with Rice and Green Beans",
@@ -51,7 +49,3 @@ export const recipes = [
 		]
 	}
 ];
-
-const RecipesConst = props => <h1>Just some recipes</h1>;
-
-export default RecipesConst; 

@@ -5,10 +5,10 @@ import {
   selectRecipes,
   selectRemoveStatus
 } from "../Redux/recipesSlice";
-
-const AVAILABLE = 0;
-const PENDING = 1;
-const SUCCESS = 2;
+import {
+  ACTION_PENDING,
+  ACTION_SUCCESS
+} from "../Redux/redux_constants";
 
 class RecipeSearch extends Component {
   constructor(props) {
@@ -27,8 +27,8 @@ class RecipeSearch extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.remove_status === PENDING 
-      && this.props.remove_status === SUCCESS){
+    if (prevProps.remove_status === ACTION_PENDING 
+      && this.props.remove_status === ACTION_SUCCESS){
       
       var updated_list = this.state.recipes_found;
       updated_list.splice(this.state.recipe_to_be_removed, 1);

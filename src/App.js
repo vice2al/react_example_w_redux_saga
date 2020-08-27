@@ -9,11 +9,11 @@ import {
   load_request, 
   selectLoadStatus
 } from "./Redux/recipesSlice";
-import {recipes} from "./RecipesConst";
-
-const AVAILABLE = 0;
-const PENDING = 1;
-const SUCCESS = 2;
+import {
+  ACTION_PENDING,
+  ACTION_SUCCESS
+} from "./Redux/redux_constants";
+import {recipes} from "./recipes_constants";
 
 const LOADING_COMPONENTS = 0
 const RECIPESEARCH_COMPONENT = 1;
@@ -39,8 +39,8 @@ class App extends React.Component{
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.load_status === PENDING 
-      && this.props.load_status === SUCCESS)
+    if (prevProps.load_status === ACTION_PENDING 
+      && this.props.load_status === ACTION_SUCCESS)
       this.setState({active_component: RECIPESEARCH_COMPONENT});
   }
 
