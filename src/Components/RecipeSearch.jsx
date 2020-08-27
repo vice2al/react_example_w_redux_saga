@@ -49,6 +49,9 @@ class RecipeSearch extends Component {
     });
   }
   
+  // VERY optimistic search algorithm. Just checks if the search field
+  // string appears in the recipe title. Useful if you search whole words,
+  // not so useful if you search a vowel.
   handleSearch() {
   	var search_string = this.state.value;
   	var recipes_found = [];
