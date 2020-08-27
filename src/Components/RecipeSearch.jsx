@@ -48,8 +48,6 @@ class RecipeSearch extends Component {
       };
     });
   }
-
-
   
   handleSearch() {
   	var search_string = this.state.value;
@@ -63,6 +61,15 @@ class RecipeSearch extends Component {
 	  	);
 	  }
   	this.setState({recipes_found: recipes_found});
+  }
+
+  // Indicates what recipe will be removed from the state list when
+  // the status of the removal changes from PENDING to SUCCESS, by the
+  // componentDidUpdate method.
+  handleRecipeRemoval (index) {
+    this.setState({
+      recipe_to_be_removed: index
+    });
   }
 
   renderSearchResult() {
@@ -79,14 +86,8 @@ class RecipeSearch extends Component {
     }
   }
 
-  handleRecipeRemoval (index) {
-    this.setState({
-      recipe_to_be_removed: index
-    });
-  }
 
   render() {
-
     return (
     	<div>
 	    	<div>

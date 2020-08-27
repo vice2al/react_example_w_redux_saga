@@ -43,9 +43,14 @@ class AddRecipe extends Component {
     }
   }
 
+
+  //Handles changes in the field forms 
   handleChange(event) {
     const { value } = event.target;
+    // We get the field here to know which state to change
     const field = parseInt(event.target.dataset.field);
+    // We get the index here to know which position of the 
+    // ingredients or instructions array to change.
 		const index = parseInt(event.target.dataset.index);
     switch(field){
 
@@ -93,6 +98,7 @@ class AddRecipe extends Component {
   	this.props.add_request(new_recipe);
   }
 
+  //When the user needs one more ingredient or instructions form
   handleFieldAddition(event) {
   	const field = parseInt(event.target.dataset.field);
   	var list = [];
