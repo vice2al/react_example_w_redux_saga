@@ -1,9 +1,5 @@
 import { put, takeEvery, all } from 'redux-saga/effects';
 
-export function* helloSaga() {
-  console.log('Hello Sagas!')
-}
-
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
 export function* LoadAsync({ payload }) {
@@ -17,7 +13,6 @@ export function* watchLoadAsync() {
 
 export function* addAsync({ payload }) {
   yield delay(1000);
-  yield console.log("Right on lad");
   yield put({type: "recipes/add_success", payload});
 }
 
@@ -27,7 +22,6 @@ export function* watchAddAsync() {
 
 export function* RemoveAsync({ payload }) {
   yield delay(1000);
-  yield console.log("Right on lad");
   yield put({type: "recipes/remove_success", payload});
 }
 
@@ -37,7 +31,6 @@ export function* watchRemoveAsync() {
 
 export default function* rootSaga() {
   yield all([
-  	helloSaga(),
   	watchLoadAsync(),
     watchAddAsync(),
     watchRemoveAsync()
