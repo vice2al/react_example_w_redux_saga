@@ -32,7 +32,7 @@ export const recipesSlice = createSlice({
       state.remove_status = ACTION_PENDING;
     },
     remove_success: (state, action) => {
-      state.list.splice(state.list.indexOf(action.payload),1);
+      state.list.splice(findRecipe(action.payload, state.list),1);
       state.remove_status = ACTION_SUCCESS;
     }
   }
@@ -52,3 +52,13 @@ export const selectAddStatus = state => state.recipes.add_status;
 export const selectRemoveStatus = state => state.recipes.remove_status;
 
 export default recipesSlice.reducer;
+
+// Custom indexOf to find the right recipe for the remove action.
+function findRecipe(recipe, list) {
+  for (var i =  0; i < list.length; i++){
+    if (recipe.title === list[i].title)
+      return i;
+  }
+
+  return -1;
+} 
